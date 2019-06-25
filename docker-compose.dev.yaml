@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  devserver:
+    working_dir: /opt/services/webapp
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    env_file:
+      - config/.env
+    
+    volumes:
+      - .:/opt/services/webapp
+      ## This lets you avoid setting up Git again in the container
+      - ~/.gitconfig:/root/.gitconfig
+      - ~/.ssh:/root/.ssh
+    ports:
+      - 9000:9000
+      - 3000:3000
+    networks:
+      - nginx_network
+      - database1_network
+    depends_on:
+      - database1
+    command: sleep infinity 
+
+  testserver:
+    env_file: config/.env
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.dev
+    working_dir: /mnt
+    volumes:
+      - .:/mnt
+    depends_on:
+      - database1
+    ports:
+      - 5053:5053
+    environment:
+      APPLICATION_PORT: 5053
+      APPLICATION_DB_CONTAINER: database1
+    command: python -m pytest test/
+
+  database1:
+    image: postgres:10
+    env_file:
+      - config/db/database1_env
+    networks:
+      - database1_network
+    ports:
+      - 5432:5432
+    volumes:
+      - databaseDEV_volume:/var/lib/postgresql/data
+
+networks:
+  nginx_network:
+    driver: bridge
+  database1_network:
+    driver: bridge
+
+volumes:
+  databaseDEV_volume:
+  static_volume:

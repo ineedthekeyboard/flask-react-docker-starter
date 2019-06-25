@@ -1,0 +1,17 @@
+{
+    "name": "FlaskDev",
+    "appPort": 9000,
+    "context": "..",
+    "dockerComposeFile": [
+        "../docker-compose.dev.yaml"
+    ],
+    "service": "devserver",
+    "workspaceFolder": "/opt/services/webapp",
+    "extensions": [
+        "ms-python.python",
+        "mtxr.sqltools"
+    ],
+    "settings": {
+        "python.pythonPath": "/usr/local/bin/python"
+    }
+}
