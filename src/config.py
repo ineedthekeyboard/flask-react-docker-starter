@@ -14,7 +14,7 @@ POSTGRES = {
     "port": os.getenv("APPLICATION_POSTGRES_PORT", 5432),
     "db": os.getenv("APPLICATION_POSTGRES_DB", "database1"),
 }
-DB_URI = "postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s" % POSTGRES
+DB_URI = "postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s?ssl=true" % POSTGRES
 
 logging.basicConfig(
     filename=os.getenv("SERVICE_LOG", "server.log"),
