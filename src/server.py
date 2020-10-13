@@ -3,6 +3,7 @@ from flasgger import Swagger
 from flask import Flask
 from flask.blueprints import Blueprint
 
+import logging
 import config
 import routes
 from models import db
@@ -37,6 +38,8 @@ server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI
 server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 db.init_app(server)
 db.app = server
+
+logging.info(config.DB_URI)
 
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
