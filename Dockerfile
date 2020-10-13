@@ -10,5 +10,6 @@ COPY . /opt/services/webapp/
 
 # install our two dependencies
 RUN pip install -r requirements.txt
+RUN python ./src/manage.py db upgrade
 
 CMD gunicorn --bind :8080 --chdir src server:server
