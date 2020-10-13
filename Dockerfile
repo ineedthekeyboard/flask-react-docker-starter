@@ -11,4 +11,4 @@ COPY . /opt/services/webapp/
 # install our two dependencies
 RUN pip install -r requirements.txt
 
-CMD gunicorn --log-file ./server_unicorn.log --bind :8080 --chdir src server:server
+CMD gunicorn --bind :8080 --chdir src server:server
